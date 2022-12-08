@@ -6,12 +6,11 @@
 /*   By: yokitaga <yokitaga@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 19:12:45 by yokitaga          #+#    #+#             */
-/*   Updated: 2022/12/08 18:04:13 by yokitaga         ###   ########.fr       */
+/*   Updated: 2022/12/08 18:05:14 by yokitaga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
-
 
 void signal_handler(int signal, siginfo_t *info, void *context)
 {

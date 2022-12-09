@@ -6,13 +6,16 @@
 /*   By: yokitaga <yokitaga@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 19:12:45 by yokitaga          #+#    #+#             */
-/*   Updated: 2022/12/09 18:11:00 by yokitaga         ###   ########.fr       */
+/*   Updated: 2022/12/09 18:19:29 by yokitaga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
 volatile sig_atomic_t   g_list[2] = {0, 0};
+
+#define CHAR 0
+#define CNT  1
 
 void signal_handler(int signal, siginfo_t *info, void *context)
 {
@@ -22,8 +25,12 @@ void signal_handler(int signal, siginfo_t *info, void *context)
         exit(EXIT_FAILURE);
     (void)context;
     if (signal == ONEBIT)
-        
+        g_list[CHAR] = g_list[CHAR] << 1 | 1;
     else if (signal == ZEROBIT)
+        g_list[CHAR] = g_list[CHAR] << 1;
+    if (g_list[CNT] < 7)
+        g_list[CNT]++;
+        
 }
 
 int main(void)

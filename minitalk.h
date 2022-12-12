@@ -6,7 +6,7 @@
 /*   By: yokitaga <yokitaga@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:41:29 by yokitaga          #+#    #+#             */
-/*   Updated: 2022/12/12 14:44:51 by yokitaga         ###   ########.fr       */
+/*   Updated: 2022/12/13 00:20:01 by yokitaga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,6 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <sys/types.h>
+# include "libft/libft.h"
 
 #endif

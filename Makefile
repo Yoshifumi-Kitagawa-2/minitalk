@@ -3,7 +3,7 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 LIBFTDIR = $(PWD)/libft 
 LIBFT = $(LIBFTDIR)/libft.a
-SRCS_1 = server.c
+SRCS_1 = server.c 
 OBJS_1 = server
 
 all: $(NAME)

@@ -1,7 +1,7 @@
 NAME = $(OBJ_1)
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-LIBFTDIR = $(CURDIR)/libft 
+LIBFTDIR = $(PWD)/libft 
 LIBFT = $(LIBFTDIR)/libft.a
 SRCS_1 = server.c
 OBJS_1 = server

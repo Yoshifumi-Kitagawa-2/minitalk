@@ -6,7 +6,7 @@
 /*   By: yokitaga <yokitaga@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:41:09 by yokitaga          #+#    #+#             */
-/*   Updated: 2022/12/13 14:49:07 by yokitaga         ###   ########.fr       */
+/*   Updated: 2022/12/13 23:44:58 by yokitaga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void signal_handler(int signal, siginfo_t *info, void *context)
         g_list[CHAR] = g_list[CHAR] << 1;
     else if (signal == ONEBIT)
         g_list[CHAR] = g_list[CHAR] << 1 | 1;
-    if (g_list[CNT] == 8 && g_list[CHAR] == 0x04)
+    if (g_list[CNT] == 8 && g_list[CHAR] == EOT)
     {
         kill(pid, CMPSIG);
         return ;

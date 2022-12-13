@@ -6,7 +6,7 @@
 /*   By: yokitaga <yokitaga@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:41:09 by yokitaga          #+#    #+#             */
-/*   Updated: 2022/12/12 23:27:12 by yokitaga         ###   ########.fr       */
+/*   Updated: 2022/12/13 14:49:07 by yokitaga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,16 @@ void signal_handler(int signal, siginfo_t *info, void *context)
         g_list[CHAR] = g_list[CHAR] << 1;
     else if (signal == ONEBIT)
         g_list[CHAR] = g_list[CHAR] << 1 | 1;
-    if (g_list[CNT] == 8 && g_list[CHAR] == 0x03)
+    if (g_list[CNT] == 8 && g_list[CHAR] == 0x04)
     {
-        kill(pid, COMPLETESIG);
+        kill(pid, CMPSIG);
         return ;
     }
     else if (g_list[CNT] < 8)
         g_list[CNT]++;
     else
     {
-        ft_putchar_fd(g_list[CHAR], 1);
+        ft_putchar_fd((char)g_list[CHAR], 1);
         g_list[CHAR] = 0;
         g_list[CNT] = 1;
     }
@@ -42,7 +42,7 @@ void signal_handler(int signal, siginfo_t *info, void *context)
     //- pid_t pid:シグナルを送信するプロセスのIDを指定する。
     //- int sig：送信するシグナルの種類を指定する。
     //kill() 関数は、成功すると 0 を、失敗すると -1 を返します。
-    kill(pid, CONTINUESIG);
+    kill(pid, ACKSIG);
 }
 
 int main(void)

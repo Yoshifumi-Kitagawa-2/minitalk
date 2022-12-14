@@ -10,8 +10,9 @@ OBJS_2 = client
 
 all: $(NAME)
 
-$(NAME): $(SRCS_1) $(LIBFT)
+$(NAME): $(SRCS_1) $(SRCS_2) $(LIBFT)
 	$(CC) $(SRCS_1) $(LIBFT) $(CFLAGS) -o $(OBJS_1)
+	$(CC) $(SRCS_2) $(LIBFT) $(CFLAGS) -o $(OBJS_2)
 
 $(LIBFT):
 	cd $(LIBFTDIR) && make all

@@ -1,10 +1,12 @@
-NAME = $(OBJ_1)
+NAME = $(OBJS_1) $(OBJS_2)
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 LIBFTDIR = $(PWD)/libft 
 LIBFT = $(LIBFTDIR)/libft.a
 SRCS_1 = server.c 
+SRCS_2 = client.c
 OBJS_1 = server
+OBJS_2 = client
 
 all: $(NAME)
 

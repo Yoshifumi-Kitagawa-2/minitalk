@@ -6,13 +6,13 @@
 /*   By: yokitaga <yokitaga@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:41:09 by yokitaga          #+#    #+#             */
-/*   Updated: 2022/12/13 23:44:58 by yokitaga         ###   ########.fr       */
+/*   Updated: 2022/12/14 10:11:14 by yokitaga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "minitalk.h"
 
-volatile sig_atomic_t   g_list[2] = {0, 1};
+volatile sig_atomic_t   g_atomic_data[2] = {0, 1};
 
 void signal_handler(int signal, siginfo_t *info, void *context)
 {
@@ -22,21 +22,21 @@ void signal_handler(int signal, siginfo_t *info, void *context)
     
     (void)context;
     if (signal == ZEROBIT)
-        g_list[CHAR] = g_list[CHAR] << 1;
+        g_atomic_data[CHAR] = g_atomic_data[CHAR] << 1;
     else if (signal == ONEBIT)
-        g_list[CHAR] = g_list[CHAR] << 1 | 1;
-    if (g_list[CNT] == 8 && g_list[CHAR] == EOT)
+        g_atomic_data[CHAR] = g_atomic_data[CHAR] << 1 | 1;
+    if (g_atomic_data[CNT] == 8 && g_atomic_data[CHAR] == EOT)
     {
         kill(pid, CMPSIG);
         return ;
     }
-    else if (g_list[CNT] < 8)
-        g_list[CNT]++;
+    else if (g_atomic_data[CNT] < 8)
+        g_atomic_data[CNT]++;
     else
     {
-        ft_putchar_fd((char)g_list[CHAR], 1);
-        g_list[CHAR] = 0;
-        g_list[CNT] = 1;
+        ft_putchar_fd((char)g_atomic_data[CHAR], 1);
+        g_atomic_data[CHAR] = 0;
+        g_atomic_data[CNT] = 1;
     }
     //kill() 関数は、以下の引数を取ります。
     //- pid_t pid:シグナルを送信するプロセスのIDを指定する。

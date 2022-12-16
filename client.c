@@ -6,7 +6,7 @@
 /*   By: yokitaga <yokitaga@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:41:13 by yokitaga          #+#    #+#             */
-/*   Updated: 2022/12/16 17:10:38 by yokitaga         ###   ########.fr       */
+/*   Updated: 2022/12/16 17:12:20 by yokitaga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@ volatile sig_atomic_t g_atomic_data = 0;
 void signal_handler(int signal)
 {
     if (signal == CMPSIG)
+    {
         g_atomic_data = CMPSIG;
-        //ft_putstr_fd("FINISHED!", 1);
+        ft_putstr_fd("FINISHED!", 1);
+    }
     else if (signal == ACKSIG)
         g_atomic_data = ACKSIG;
 }

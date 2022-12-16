@@ -6,39 +6,72 @@
 /*   By: yokitaga <yokitaga@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:41:09 by yokitaga          #+#    #+#             */
-/*   Updated: 2022/12/16 19:58:10 by yokitaga         ###   ########.fr       */
+/*   Updated: 2022/12/17 00:37:30 by yokitaga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "minitalk.h"
 #include <stdio.h>
 
-volatile sig_atomic_t   g_atomic_data[2] = {0, 1};
+volatile sig_atomic_t   g_atomic_data[2] = {0, 0};
+
+
+int ft_power(int a, size_t n)
+{
+    if (n == 0)
+        return (1);
+    else if (n == 1)
+        return (a);
+    else
+        return (a * ft_power(a, n - 1));
+}
+
+/*
+uint8_t ft_change(int binary)
+{
+    uint8_t n;
+    uint8_t base;
+
+    n = 0;
+    base = 1;
+    while (binary > 0)
+    {
+        n += (n % 10)*base;
+        binary /= 10;
+        base = base*2;
+    }
+    return (n);
+}
+*/
 
 void signal_handler(int signal, siginfo_t *info, void *context)
 {
     //info->si_pidはシグナルを送信したプロセスのIDの値が入っている。
     //今回の場合はclientのプロセスIDが入っている
     const pid_t pid = info->si_pid;
+    //char ch;
     
     (void)context;
-    if (signal == ZEROBIT)
-        g_atomic_data[CHAR] = g_atomic_data[CHAR] << 1;
-    else if (signal == ONEBIT)
-        g_atomic_data[CHAR] = g_atomic_data[CHAR] << 1 | 1;
-    if (g_atomic_data[CNT] == 8 && g_atomic_data[CHAR] == EOT)
+    //if (signal == ZEROBIT)
+        //g_atomic_data[CHAR] = g_atomic_data[CHAR] << 1;
+    //else if (signal == ONEBIT)
+        //g_atomic_data[CHAR] = g_atomic_data[CHAR] << 1 | 1;
+    if (signal == ONEBIT)
+        g_atomic_data[CHAR] += ft_power(2, g_atomic_data[CNT]);
+    if (g_atomic_data[CNT] == 7 && g_atomic_data[CHAR] == EOT)
     {
         kill(pid, CMPSIG);
         return ;
     }
-    else if (g_atomic_data[CNT] < 8)
+    else if (g_atomic_data[CNT] < 7)
         g_atomic_data[CNT]++;
     else
     {
-        //printf("%d", g_atomic_data[CHAR]);
         ft_putchar_fd(g_atomic_data[CHAR], 1);
+        //ch = (char)ft_change(g_atomic_data[CHAR]);
+        //ft_putchar_fd(ch, 1);
         g_atomic_data[CHAR] = 0;
-        g_atomic_data[CNT] = 1;
+        g_atomic_data[CNT] = 0;
     }
     //kill() 関数は、以下の引数を取ります。
     //- pid_t pid:シグナルを送信するプロセスのIDを指定する。

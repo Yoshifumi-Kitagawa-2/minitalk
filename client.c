@@ -6,7 +6,7 @@
 /*   By: yokitaga <yokitaga@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:41:13 by yokitaga          #+#    #+#             */
-/*   Updated: 2022/12/16 17:12:20 by yokitaga         ###   ########.fr       */
+/*   Updated: 2022/12/16 18:14:07 by yokitaga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int main(int argc, char const*argv[])
     pid_t server_pid;
     struct sigaction sa;
     server_pid = ft_atoi(argv[1]);
-    sa.sa_flags = 0;;
+    sa.sa_flags = 0;
     sa.sa_handler = signal_handler;
     sigemptyset(&sa.sa_mask);
     sigaction(SIGUSR1, &sa, NULL);

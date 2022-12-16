@@ -1,7 +1,8 @@
 NAME = $(OBJS_1) $(OBJS_2)
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-LIBFT = $(PWD)/libft /libft.a
+LIBFTDIR = $(PWD)/libft
+LIBFT = $(LIBFTDIR)/libft.a
 SRCS_1 = server.c 
 SRCS_2 = client.c
 OBJS_1 = server

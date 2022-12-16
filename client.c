@@ -6,11 +6,12 @@
 /*   By: yokitaga <yokitaga@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:41:13 by yokitaga          #+#    #+#             */
-/*   Updated: 2022/12/16 18:14:07 by yokitaga         ###   ########.fr       */
+/*   Updated: 2022/12/16 18:25:49 by yokitaga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
+#include <stdio.h>
 
 volatile sig_atomic_t g_atomic_data = 0;
 

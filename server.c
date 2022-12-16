@@ -6,11 +6,12 @@
 /*   By: yokitaga <yokitaga@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:41:09 by yokitaga          #+#    #+#             */
-/*   Updated: 2022/12/14 10:11:14 by yokitaga         ###   ########.fr       */
+/*   Updated: 2022/12/16 19:58:10 by yokitaga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "minitalk.h"
+#include <stdio.h>
 
 volatile sig_atomic_t   g_atomic_data[2] = {0, 1};
 
@@ -34,7 +35,8 @@ void signal_handler(int signal, siginfo_t *info, void *context)
         g_atomic_data[CNT]++;
     else
     {
-        ft_putchar_fd((char)g_atomic_data[CHAR], 1);
+        //printf("%d", g_atomic_data[CHAR]);
+        ft_putchar_fd(g_atomic_data[CHAR], 1);
         g_atomic_data[CHAR] = 0;
         g_atomic_data[CNT] = 1;
     }

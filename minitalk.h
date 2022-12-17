@@ -6,12 +6,19 @@
 /*   By: yokitaga <yokitaga@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:41:29 by yokitaga          #+#    #+#             */
-/*   Updated: 2022/12/16 23:13:15 by yokitaga         ###   ########.fr       */
+/*   Updated: 2022/12/17 19:19:13 by yokitaga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINITALK_H
 # define MINITALK_H
+
+# include <signal.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <sys/types.h>
+# include <stdbool.h>
+# include "libft/libft.h"
 
 # define CHAR 0
 # define CNT  1
@@ -21,11 +28,10 @@
 # define CMPSIG SIGUSR2
 # define EOT  4
 
-# include <signal.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <sys/types.h>
-# include <stdbool.h>
-# include "libft/libft.h"
+typedef struct s_signal
+{
+    size_t nbr;
+    int cnt;
+}t_signal;
 
 #endif

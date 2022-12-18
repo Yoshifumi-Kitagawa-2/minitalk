@@ -5,15 +5,15 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yokitaga <yokitaga@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/17 18:36:35 by yokitaga          #+#    #+#             */
-/*   Updated: 2022/12/17 20:02:01 by yokitaga         ###   ########.fr       */
+/*   Created: 2022/12/12 13:41:09 by yokitaga          #+#    #+#             */
+/*   Updated: 2022/12/17 18:50:54 by yokitaga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "minitalk.h"
 #include <stdio.h>
 
-t_signal    g_signal;
+volatile sig_atomic_t   g_atomic_data[2] = {0, 0};
 
 int ft_change_binary(size_t n)
 {
@@ -38,25 +38,21 @@ void signal_handler(int signal, siginfo_t *info, void *context)
     //else if (signal == ONEBIT)
         //g_atomic_data[CHAR] = g_atomic_data[CHAR] << 1 | 1;
     if (signal == ONEBIT)
-        g_signal.nbr += ft_change_binary(g_signal.cnt);
-    if (g_signal.cnt == 7 && g_signal.nbr == EOT)
+        g_atomic_data[CHAR] += ft_change_binary(g_atomic_data[CNT]);
+    if (g_atomic_data[CNT] == 7 && g_atomic_data[CHAR] == EOT)
     {
-        //printf("%d\n", g_signal.cnt);
         kill(pid, CMPSIG);
         return ;
     }
-    else if (g_signal.cnt < 7)
+    else if (g_atomic_data[CNT] < 7)
+        g_atomic_data[CNT]++;
+    else
     {
-        //printf("%d\n", g_signal.cnt);
-        g_signal.cnt++;
-    }
-    else if (g_signal.cnt == 7)
-    {
-        ft_putchar_fd((char)g_signal.nbr, 1);
+        ft_putchar_fd(g_atomic_data[CHAR], 1);
         //ch = (char)ft_change(g_atomic_data[CHAR]);
         //ft_putchar_fd(ch, 1);
-        g_signal.nbr = 0;
-        g_signal.cnt = 0;
+        g_atomic_data[CHAR] = 0;
+        g_atomic_data[CNT] = 0;
     }
     //kill() 関数は、以下の引数を取ります。
     //- pid_t pid:シグナルを送信するプロセスのIDを指定する。
@@ -67,8 +63,6 @@ void signal_handler(int signal, siginfo_t *info, void *context)
 
 int main(void)
 {
-    g_signal.nbr = 0;
-    g_signal.cnt = 0;
     //sigaction構造体の宣言
     struct sigaction    sa;
     //sa_flagsはシグナルハンドラ関数の動作を制御するフラグ
@@ -97,3 +91,27 @@ int main(void)
         pause();
     return(0);
 }
+
+/*
+メモ
+struct sigaction {
+    void     (*sa_handler)(int);
+    void     (*sa_sigaction)(int, siginfo_t *, void *);
+    sigset_t   sa_mask;
+    int        sa_flags;
+    void     (*sa_restorer)(void); };
+- **`sa_handler`**：シグナルに対する処理を行う関数へのポインタ。この値がNULLの場合は、デフォルトの処理を行う。
+- **`sa_mask`**：このシグナルハンドラ関数が実行される間、他のシグナルをブロックするシグナルセット。
+- **`sa_flags`**：シグナルハンドラ関数の動作を制御するフラグ。
+
+例えば、次のようなsigaction構造体を定義した場合です。
+
+struct sigaction act;
+act.sa_handler = signal_handler;
+sigemptyset(&act.sa_mask);
+act.sa_flags = 0;
+
+この例では、`act`という名前のsigaction構造体を定義しています。
+そして、`sa_handler`メンバーには`signal_handler`関数へのポインタを設定しています。
+また、**`sa_mask`メンバーには、ブロックするシグナルセットを設定しています。
+*/

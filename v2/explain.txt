@@ -1,0 +1,115 @@
+#sigaction構造体について
+struct sigaction {
+    void     (*sa_handler)(int);
+    void     (*sa_sigaction)(int, siginfo_t *, void *);
+    sigset_t   sa_mask;
+    int        sa_flags;
+    void     (*sa_restorer)(void); };
+- **`sa_handler`**：シグナルに対する処理を行う関数へのポインタ。この値がNULLの場合は、デフォルトの処理を行う。
+- **`sa_mask`**：このシグナルハンドラ関数が実行される間、他のシグナルをブロックするシグナルセット。
+- **`sa_flags`**：シグナルハンドラ関数の動作を制御するフラグ。
+
+例えば、次のようなsigaction構造体を定義した場合です。
+
+struct sigaction act;
+act.sa_handler = signal_handler;
+sigemptyset(&act.sa_mask);
+act.sa_flags = 0;
+
+この例では、`act`という名前のsigaction構造体を定義しています。
+そして、`sa_handler`メンバーには`signal_handler`関数へのポインタを設定しています。
+また、**`sa_mask`メンバーには、ブロックするシグナルセットを設定しています。
+
+#sigaddset関数について
+sigaddset関数は、信号集合に信号を追加するための関数です。信号集合とは、複数の信号をまとめたものです。sigset_t型を使用して定義されます。
+sigaddset関数の第1引数に指定された信号集合に、第2引数で指定された信号を追加します。成功すると、0が返されます。エラーの場合は、-1が返されます。
+例えば、次のようなコードでは、sigset_t型の変数setにSIGINT信号を追加しています。
+#include <signal.h>
+#include <stdio.h>
+
+int main(int argc, char *argv[]) {
+  sigset_t set;
+  sigemptyset(&set);
+  sigaddset(&set, SIGINT);
+
+  return 0;
+}
+sigaddset関数は、信号マスクを設定するときや、信号集合を操作するときに使用されることがあります。sigaddset関数で信号を追加した後に、sigprocmask関数を使用して、信号マスクを設定することができます。
+
+#sigaction関数について
+sigaction関数は、信号ハンドラーを設定するための関数です。信号ハンドラーとは、信号を受け取ったときに実行される関数のことです。
+sigaction関数の第1引数で指定された信号について、第2引数で指定された信号ハンドラーを設定します。第3引数に指定された変数に、以前に設定されていた信号ハンドラーが格納されます。成功すると、0が返されます。エラーの場合は、-1が返されます。
+信号ハンドラーを設定するには、sigaction関数を使用するか、signal関数を使用します。sigaction関数は、signal関数よりも高度な機能を提供しており、信号を受け取ったときに実行される関数を指定するだけでなく、信号マスクを設定したり、信号をブロックすることができます。
+sigaction関数は、信号ハンドラーを設定するときに使用されることがあります。例えば、SIGINT信号を受け取ったときに、特定の処理を実行するように設定することができます。
+#include <signal.h>
+#include <stdio.h>
+void sigint_handler(int signum) {
+  printf("Caught SIGINT!\n");
+}
+
+int main(int argc, char *argv[]) {
+  struct sigaction sa;
+  sa.sa_handler = sigint_handler;
+  sigaction(SIGINT, &sa, NULL);
+
+  return 0;
+}
+このようにして、sigaction関数を使用することで、SIGINT信号を受け取ったときにsigint_handler関数が実行されるようになる
+
+#volatile sig_atomic_tの用途
+
+volatile sig_atomic_tは、C言語で信号ハンドラーを定義するときに使用される型です。信号ハンドラーとは、信号を受け取ったときに実行される関数のことです。
+volatile sig_atomic_t型は、信号ハンドラー内でのみ使用されます。信号ハンドラー内では、一般的な変数を直接操作することができません。信号ハンドラー内で変数を操作するには、volatile sig_atomic_t型を使用する必要があります。
+volatile sig_atomic_t型は、信号ハンドラー内での変数アクセスを原子的に行うことができるという点が特徴です。原子的アクセスとは、複数のスレッドから同時にアクセスされることを防ぐことを意味します。
+信号ハンドラー内では、一般的な変数を直接操作することができません。例えば、次のようなコードは、信号ハンドラー内での変数アクセスに失敗します。
+====
+#include <signal.h>
+#include <stdio.h>
+
+int counter = 0;
+
+void sigint_handler(int signum) {
+  counter++;
+  printf("Caught SIGINT! Counter = %d\n", counter);
+}
+
+int main(int argc, char *argv[]) {
+  struct sigaction sa;
+  sa.sa_handler = sigint_handler;
+  sigaction(SIGINT, &sa, NULL);
+
+  return 0;
+}
+====
+
+このような場合は、volatile sig_atomic_t型を使用して変数を定義する必要があります。次のように修正することで、信号ハンドラー内での変数アクセスが可能になります。
+
+#include <signal.h>
+#include <stdio.h>
+
+volatile sig_atomic_t counter = 0;
+
+void sigint_handler(int signum) {
+  counter++;
+  printf("Caught SIGINT! Counter = %d\n", counter);
+}
+
+int main(int argc, char *argv[]) {
+  struct sigaction sa;
+  sa.sa_handler = sigint_handler;
+  sigaction(SIGINT, &sa, NULL);
+
+  return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+

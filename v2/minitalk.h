@@ -6,7 +6,7 @@
 /*   By: yokitaga <yokitaga@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 15:56:08 by yokitaga          #+#    #+#             */
-/*   Updated: 2022/12/18 17:52:48 by yokitaga         ###   ########.fr       */
+/*   Updated: 2022/12/18 22:48:12 by yokitaga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 # include <signal.h>
 # include <stdlib.h>
-# include <unistd.h>>
+# include <unistd.h>
 # include <sys/types.h>
 # include <stdbool.h>
 # include "libft/libft.h"

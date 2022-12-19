@@ -6,7 +6,7 @@
 #    By: yokitaga <yokitaga@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/18 15:56:04 by yokitaga          #+#    #+#              #
-#    Updated: 2022/12/18 16:16:24 by yokitaga         ###   ########.fr        #
+#    Updated: 2022/12/19 16:06:45 by yokitaga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,8 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 LIBFTDIR = $(PWD)/libft
 LIBFT = $(LIBFTDIR)/libft.a
-SRCS_1 = server.c 
-SRCS_2 = client.c
+SRCS_1 = server_bonus.c 
+SRCS_2 = client_bonus.c
 OBJS_1 = server
 OBJS_2 = client
 

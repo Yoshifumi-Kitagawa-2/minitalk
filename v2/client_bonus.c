@@ -6,7 +6,7 @@
 /*   By: yokitaga <yokitaga@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 15:56:01 by yokitaga          #+#    #+#             */
-/*   Updated: 2022/12/19 20:34:25 by yokitaga         ###   ########.fr       */
+/*   Updated: 2022/12/20 00:04:05 by yokitaga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,10 @@ void signal_handler(int signal)
     if (signal == CMPSIG)
     {
         g_atomic_data = CMPSIG;
-        //printf("recieve CMPSIG\n");
         ft_putstr_fd("\nFINISHED!", 1);
     }
     else if (signal == ACKSIG)
-    {
         g_atomic_data = ACKSIG;
-        //printf("recieve ACKSIG\n");
-    }
 }
 
 void send_byte(pid_t server_pid, char ch)

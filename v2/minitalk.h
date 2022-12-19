@@ -6,7 +6,7 @@
 /*   By: yokitaga <yokitaga@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 15:56:08 by yokitaga          #+#    #+#             */
-/*   Updated: 2022/12/18 22:48:12 by yokitaga         ###   ########.fr       */
+/*   Updated: 2022/12/19 23:58:18 by yokitaga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@
 # define ACKSIG SIGUSR1
 # define CMPSIG SIGUSR2
 # define EOT  4
-# define MAX_SIZE 1000
+# define MAX_SIZE 100
 
 #endif

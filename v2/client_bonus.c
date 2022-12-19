@@ -6,7 +6,7 @@
 /*   By: yokitaga <yokitaga@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 15:56:01 by yokitaga          #+#    #+#             */
-/*   Updated: 2022/12/19 19:50:20 by yokitaga         ###   ########.fr       */
+/*   Updated: 2022/12/19 20:34:25 by yokitaga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ void send_byte(pid_t server_pid, char ch)
         cnt++;
         ch = ch >> 1;
         while (g_atomic_data == 0)
-            usleep(10);
+            usleep(50);
         g_atomic_data = 0;
-        usleep(100);
+        usleep(500);
     }
 }
 

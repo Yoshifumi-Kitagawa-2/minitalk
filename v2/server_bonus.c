@@ -6,7 +6,7 @@
 /*   By: yokitaga <yokitaga@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 15:56:11 by yokitaga          #+#    #+#             */
-/*   Updated: 2022/12/19 19:51:07 by yokitaga         ###   ########.fr       */
+/*   Updated: 2022/12/19 20:29:13 by yokitaga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int ft_change_binary(size_t n)
         return (2 * ft_change_binary(n - 1));
 }
 
-static int nbr_to_str(uint8_t nbr)
+static int nbr_to_str(int8_t nbr)
 {
     static  char    str[MAX_SIZE];
     static  size_t  i = 0;
@@ -58,8 +58,8 @@ static int nbr_to_str(uint8_t nbr)
 
 static void signal_handler(int signal, siginfo_t *info, void *context)
 {
-    static uint8_t  nbr = 0;
-    static uint8_t  cnt = 0;
+    static volatile sig_atomic_t  nbr = 0;
+    static volatile sig_atomic_t  cnt = 0;
     (void)context;
     if (signal == ONEBIT)
         nbr += ft_change_binary(cnt);

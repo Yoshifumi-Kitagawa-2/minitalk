@@ -6,15 +6,12 @@
 /*   By: yokitaga <yokitaga@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 15:56:11 by yokitaga          #+#    #+#             */
-/*   Updated: 2022/12/19 20:29:13 by yokitaga         ###   ########.fr       */
+/*   Updated: 2022/12/19 23:47:31 by yokitaga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "minitalk.h"
 #include <stdio.h>
-
-//信号ハンドラー内での変数アクセスを原子的に行うことができるという点が特徴。原子的アクセスとは、複数のスレッドから同時にアクセスされることを防ぐことを意味する。
-volatile sig_atomic_t g_atomic_data = 0;
 
 void ft_put_error_exit()
 {
@@ -60,7 +57,14 @@ static void signal_handler(int signal, siginfo_t *info, void *context)
 {
     static volatile sig_atomic_t  nbr = 0;
     static volatile sig_atomic_t  cnt = 0;
+    static volatile sig_atomic_t  pid = 0;
     (void)context;
+    if (pid != info->si_pid)
+    {
+        pid = info->si_pid;
+        nbr = 0;
+        cnt = 0;
+    }
     if (signal == ONEBIT)
         nbr += ft_change_binary(cnt);
     cnt++;
@@ -79,6 +83,8 @@ static void signal_handler(int signal, siginfo_t *info, void *context)
 
 int main(void)
 {
+    ft_putstr_fd("PID:",1);
+    ft_putnbr_fd(getpid(), 1);
     struct sigaction sa; //sigactio構造体を宣言。
     sigemptyset(&sa.sa_mask); //sa_maskを空に。
     //sa_maskにSIGUSR1/2を追加
@@ -89,8 +95,6 @@ int main(void)
     //sigaction関数を使用することで、SIGINT信号を受け取ったときにsigint_handler関数が実行されるようになる
     if (sigaction(SIGUSR1, &sa, NULL) == -1 || sigaction(SIGUSR2, &sa, NULL) == -1)
         ft_put_error_exit();
-    ft_putstr_fd("PID:",1);
-    ft_putnbr_fd(getpid(), 1);
     while(1)
         pause();
     return(0);

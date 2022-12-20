@@ -6,7 +6,7 @@
 #    By: yokitaga <yokitaga@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/18 15:56:04 by yokitaga          #+#    #+#              #
-#    Updated: 2022/12/20 16:47:40 by yokitaga         ###   ########.fr        #
+#    Updated: 2022/12/20 16:50:30 by yokitaga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,6 @@ clean:
 	rm -f $(NAME)
 
 fclean: clean
-	rm -f $(NAME)
 	cd $(LIBFTDIR) && make fclean
 
 re:fclean all

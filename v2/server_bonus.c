@@ -6,18 +6,11 @@
 /*   By: yokitaga <yokitaga@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 15:56:11 by yokitaga          #+#    #+#             */
-/*   Updated: 2022/12/19 23:47:31 by yokitaga         ###   ########.fr       */
+/*   Updated: 2022/12/20 15:09:15 by yokitaga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minitalk.h"
-#include <stdio.h>
-
-void ft_put_error_exit()
-{
-    ft_putstr_fd("Error Occured\n", 1);
-    exit(EXIT_FAILURE);
-}
+# include "minitalk_bonus.h"
 
 int ft_change_binary(size_t n)
 {
@@ -29,7 +22,7 @@ int ft_change_binary(size_t n)
         return (2 * ft_change_binary(n - 1));
 }
 
-static int nbr_to_str(int8_t nbr)
+int nbr_to_str(int8_t nbr)
 {
     static  char    str[MAX_SIZE];
     static  size_t  i = 0;
@@ -83,18 +76,22 @@ static void signal_handler(int signal, siginfo_t *info, void *context)
 
 int main(void)
 {
-    ft_putstr_fd("PID:",1);
+    ft_putstr_fd("sever PID:",1);
     ft_putnbr_fd(getpid(), 1);
-    struct sigaction sa; //sigactio構造体を宣言。
-    sigemptyset(&sa.sa_mask); //sa_maskを空に。
-    //sa_maskにSIGUSR1/2を追加
+    struct sigaction sa;
+    sigemptyset(&sa.sa_mask); 
     if (sigaddset(&sa.sa_mask, SIGUSR1) == -1 || sigaddset(&sa.sa_mask, SIGUSR2) == -1)
-        ft_put_error_exit();
+    {
+        ft_putstr_fd("Error Occured\n", 1);
+        exit(EXIT_FAILURE);
+    }
     sa.sa_flags = SA_SIGINFO;
     sa.sa_sigaction = &signal_handler;
-    //sigaction関数を使用することで、SIGINT信号を受け取ったときにsigint_handler関数が実行されるようになる
     if (sigaction(SIGUSR1, &sa, NULL) == -1 || sigaction(SIGUSR2, &sa, NULL) == -1)
-        ft_put_error_exit();
+    {
+        ft_putstr_fd("Error Occured\n", 1);
+        exit(EXIT_FAILURE);
+    }
     while(1)
         pause();
     return(0);
